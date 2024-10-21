@@ -1,0 +1,191 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button color="primary"></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Laman Anda</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+    <ion-header collapse="condense">
+        <ion-toolbar>
+            <ion-title size="large">Laman Anda</ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <app-unavailable></app-unavailable>
+<!--
+    <ion-segment
+        [(ngModel)]="view"
+        class="sticky top-0 z-10 bg-white"
+    >
+        <ion-segment-button value="default">
+            <ion-label>Umum</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="address">
+            <ion-label>Alamat</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="theme">
+            <ion-label>Tema</ion-label>
+        </ion-segment-button>
+    </ion-segment>
+
+    <div [ngSwitch]="view">
+
+        <div
+            *ngSwitchCase="'default'"
+            class="m-4"
+        >
+            <ion-list>
+                <ion-item-group>
+                    <ion-item-divider>
+                        <ion-label>Pengaturan Halaman</ion-label>
+                    </ion-item-divider>
+                    <div class="flex flex-col gap-y-4">
+                      <p>URL Halaman Anda:</p>
+                      <div>
+                        <p>{{domain}}{{page.slug}} </p>
+                        <p *ngIf="page.slug.length < 4 ">
+                          <ion-icon name="close-circle" color="danger"></ion-icon>
+                          <span>
+                            URL harus lebih dari 4 karakter
+                          </span>
+                        </p>
+                        <p *ngIf="page.slug.length >= 4 && !is_slug_available">
+                          <ion-icon name="close-circle" color="danger"></ion-icon>
+                          <span>
+                            URL ini sudah digunakan
+                          </span>
+                        </p>
+                        <p *ngIf="page.slug.length >= 4 && is_slug_available">
+                          <ion-icon name="checkmark-circle" color="success"></ion-icon>
+                          <span>
+                            URL ini tersedia
+                          </span>
+                        </p>
+                      </div>
+                        <ion-input
+                            label="URL"
+                            label-placement="floating"
+                            fill="outline"
+                            placeholder="URL"
+                            [(ngModel)]="page.slug"
+                            (ngModelChange)="checkSlug($event)"
+                        ></ion-input>
+                        <ion-input
+                            label="Nama Usaha"
+                            label-placement="floating"
+                            fill="outline"
+                            placeholder="Nama Usaha"
+                        ></ion-input>
+                        <ion-input
+                            label="Tagline Usaha"
+                            label-placement="floating"
+                            fill="outline"
+                            placeholder="Tagline Usaha"
+                        ></ion-input>
+                    </div>
+                </ion-item-group>
+
+                <ion-item-group>
+                    <ion-item-divider>
+                        <ion-label>Kontak</ion-label>
+                    </ion-item-divider>
+
+                    <div class="flex flex-col gap-y-4">
+                        <ion-input
+                            label="Whatsapp"
+                            label-placement="floating"
+                            fill="outline"
+                            placeholder="Whatsapp"
+                        ></ion-input>
+                        <ion-input
+                            label="Email"
+                            label-placement="floating"
+                            fill="outline"
+                            placeholder="Email"
+                        ></ion-input>
+                    </div>
+                </ion-item-group>
+                <ion-item-group>
+                    <ion-item-divider>
+                        <ion-label>Social Media</ion-label>
+                    </ion-item-divider>
+
+                    <div class="flex flex-col gap-y-4">
+                        <ion-input
+                            label="Whatsapp"
+                            label-placement="floating"
+                            fill="outline"
+                            placeholder="Whatsapp"
+                        ></ion-input>
+                        <ion-input
+                            label="Email"
+                            label-placement="floating"
+                            fill="outline"
+                            placeholder="Email"
+                        ></ion-input>
+                    </div>
+
+                </ion-item-group>
+
+                <ion-item-group>
+                    <ion-item-divider>
+                        <ion-label>Layanan</ion-label>
+                    </ion-item-divider>
+
+                    <div class="flex flex-col gap-y-4">
+                        <ion-input
+                            label="Gofood"
+                            label-placement="floating"
+                            fill="outline"
+                            placeholder="Gofood"
+                        ></ion-input>
+                        <ion-input
+                            label="Grabfood"
+                            label-placement="floating"
+                            fill="outline"
+                            placeholder="Grabfood"
+                        ></ion-input>
+                        <ion-input
+                            label="Shopeefood"
+                            label-placement="floating"
+                            fill="outline"
+                            placeholder="Shopeefood"
+                        ></ion-input>
+                    </div>
+                </ion-item-group>
+            </ion-list>
+        </div>
+        <div *ngSwitchCase="'address'">
+            <p>tema</p>
+        </div>
+        <div
+            *ngSwitchCase="'theme'"
+            class="m-4"
+        >
+            <ion-list>
+                <ion-item *ngFor="let theme of themes">
+                    <ion-label (click)="openThemeOptions(theme)">{{theme.name}}</ion-label>
+                    <ion-checkbox
+                        slot="end"
+                        [(ngModel)]="theme.is_checked"
+                    ></ion-checkbox>
+                </ion-item>
+            </ion-list>
+        </div>
+    </div>
+    <ion-action-sheet
+        [isOpen]="chooseThemes"
+        header="Themes Actions"
+        [buttons]="themesOptions"
+        (didDismiss)="actionSheetsDidDismiss($event)"
+    ></ion-action-sheet>
+    <ion-toast
+    [isOpen]="toast.isOpen"
+    message="{{toast.message}}"
+    [duration]="3000"
+    (didDismiss)="setOpen(false)"
+></ion-toast> -->
+</ion-content>

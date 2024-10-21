@@ -1,0 +1,123 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button color="primary"></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Transaksi</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <ion-header collapse="condense">
+        <ion-toolbar>
+            <ion-title size="large">transaksi</ion-title>
+        </ion-toolbar>
+    </ion-header>
+
+    <ion-list  *ngIf="transaksi?.length > 0">
+        <ion-list-header>Transaksi</ion-list-header>
+        <ion-item
+            *ngFor="let item of transaksi"
+            (click)="showDetailTrx(item)"
+            id="item-trx"
+        >
+            <ion-thumbnail slot="start">
+                <ion-icon
+                    style="width: 100%; height: 100%"
+                    color="primary"
+                    *ngIf="item.is_full_paid"
+                    name="checkmark-circle-outline"
+                ></ion-icon>
+                <ion-icon
+                    style="width: 100%; height: 100%"
+                    color="danger"
+                    *ngIf="!item.is_full_paid"
+                    name="close-circle-outline"
+                ></ion-icon>
+            </ion-thumbnail>
+            <ion-label>
+                <h3>Rp{{item.total_price | rupiah}}</h3>
+                <p>{{item.summary.length}} item terjual</p>
+                <p>
+                    {{item.created_at | date:'dd-MMM-yyyy'}}
+                </p>
+            </ion-label>
+            <ion-note
+                slot="end"
+                *ngIf="item.is_full_paid"
+            >
+                <p class="bg-teal-500 text-white font-bold px-1 rounded-md">Lunas</p>
+            </ion-note>
+            <ion-note
+                slot="end"
+                *ngIf="!item.is_full_paid"
+            >
+                <p class="bg-red-600 text-white font-bold px-1 rounded-md">Belum Lunas</p>
+            </ion-note>
+        </ion-item>
+    </ion-list>
+    <div
+        class="flex flex-col justify-center items-center h-screen"
+        *ngIf="transaksi?.length < 1"
+    >
+        <strong class="mx-auto">Transaksi masih kosong</strong>
+
+    </div>
+    <ion-modal
+        [isOpen]="isDetailOpen"
+        [backdropDismiss]="false"
+    >
+        <ng-template class="overflow-y-scroll">
+            <ion-toolbar>
+                <ion-title>Detail Transaksi</ion-title>
+                <ion-buttons slot="end">
+                    <ion-button
+                        color="primary"
+                        (click)="isDetailOpen = false"
+                    >
+                        <ion-icon name="close-circle-outline"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
+            </ion-toolbar>
+            <div class="bg-white px-4 overflow-y-scroll no-scrollbar">
+                <div class="flex flex-row mb-4">
+                    <div class="w-8/12">Item</div>
+                    <div class="w-4/12 flex flex-row space-x-4 justify-between">
+                        <p class="text-center">Qty</p>
+                        <p >Harga</p>
+                    </div>
+                </div>
+                <hr class="border-1 my-1">
+                <div
+                    *ngFor="let item of detail_trx.summary"
+                    class="flex flex-row"
+                >
+                    <div class="w-8/12">{{item.item_name}}</div>
+                    <div class="w-4/12 flex flex-row space-x-4 justify-between">
+                        <p class="text-center">x{{item.qty}}</p>
+                        <p class="text-right">Rp{{item.price | rupiah}}</p>
+                    </div>
+                </div>
+                <hr class="border-2 my-2">
+                <div class="flex flex-row">
+                    <h3 class="font-bold w-8/12">Total</h3>
+                    <p class="font-bold w-4/12 text-right ">Rp{{detail_trx.total_price | rupiah}}</p>
+                </div>
+                <hr class="border-2 my-2">
+
+                <div *ngIf="!detail_trx.is_full_paid">
+                    <p>
+                        Status: Belum Lunas (Terbayar Rp{{detail_trx.total_paid | rupiah}})
+                    </p>
+                    <p>
+                        Sisa Pembayaran: Rp{{detail_trx.total_price - detail_trx.total_paid | rupiah}}
+                    </p>
+                </div>
+                <div class="my-2">
+                    <h2>Catatan:</h2>
+                    <p class="italic">{{detail_trx.note}}</p>
+                </div>
+            </div>
+        </ng-template>
+    </ion-modal>
+</ion-content>

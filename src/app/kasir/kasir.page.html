@@ -1,0 +1,200 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button color="primary"></ion-menu-button>
+        </ion-buttons>
+        <ion-title>kasir</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <ion-header collapse="condense">
+        <ion-toolbar>
+            <ion-title size="large">kasir</ion-title>
+        </ion-toolbar>
+    </ion-header>
+
+    <ion-list *ngIf="cart.length > 0 ">
+        <ion-item *ngFor="let item of cart; let i = index">
+            <ion-label>{{item.item_name}}</ion-label>
+            <ion-note slot="end">
+                <div class="flex flex-row justify-end">
+                    <ion-button
+                        shape="round"
+                        [disabled]="cart[i].qty < 1"
+                        (click)="cart[i].qty = cart[i].qty - 1; countTotal()"
+                    >
+                        <ion-icon name="remove-circle"></ion-icon>
+                    </ion-button>
+                    <ion-input
+                        [(ngModel)]="cart[i].qty"
+                        (change)="countTotal(i, $event.target)"
+                        class="w-8 mx-2 text-xl"
+                    ></ion-input>
+                    <ion-button
+                        shape="round"
+                        (click)="cart[i].qty = cart[i].qty + 1; countTotal()"
+                    >
+                        <ion-icon name="add-circle"></ion-icon>
+                    </ion-button>
+                </div>
+            </ion-note>
+        </ion-item>
+    </ion-list>
+    <!-- tombol floating + dengan opsi space, order, item -->
+    <ion-fab
+        slot="fixed"
+        vertical="bottom"
+        horizontal="end"
+    >
+        <ion-fab-button  (click)="selectFrom('item')">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <!-- <ion-fab-list side="top">
+            <ion-fab-button
+                (click)="selectFrom('item')"
+                data-desc="Item"
+            >
+                <ion-icon name="pricetag"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button
+                (click)="selectFrom('order')"
+                data-desc="Order"
+            >
+                <ion-icon name="clipboard"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button
+                (click)="selectFrom('space')"
+                data-desc="Space"
+            >
+                <ion-icon name="cube"></ion-icon>
+            </ion-fab-button>
+        </ion-fab-list> -->
+    </ion-fab>
+
+    <!-- popup pilih item -->
+    <ion-modal [isOpen]="isSelectItemOpen">
+        <ng-template>
+            <ion-header>
+                <ion-toolbar>
+                    <ion-title>Tambah Item</ion-title>
+                    <ion-buttons slot="end">
+                        <ion-button (click)="closeModal('cancel')">
+                            <ion-icon name="close"></ion-icon>
+                        </ion-button>
+                    </ion-buttons>
+                </ion-toolbar>
+            </ion-header>
+            <ion-content class="ion-padding">
+                <ion-list>
+                    <ion-item *ngFor="let item of items;  let i = index">
+                        <ion-label (click)="items[i].qty = items[i].qty + 1"><b class="capitalize">{{item.item_name}}</b> (Rp{{item.price | rupiah}})</ion-label>
+                        <ion-note slot="end">
+                            <div class="flex flex-row justify-end">
+                                <ion-button
+                                    shape="round"
+                                    [disabled]="item.qty < 1"
+                                    (click)="items[i].qty = items[i].qty - 1"
+                                >
+                                    <ion-icon name="remove-circle"></ion-icon>
+                                </ion-button>
+                                <ion-input
+                                    [(ngModel)]="items[i].qty"
+                                    class="w-8 mx-2 text-xl"
+                                ></ion-input>
+                                <ion-button
+                                    shape="round"
+                                    (click)="items[i].qty = items[i].qty + 1"
+                                >
+                                    <ion-icon name="add-circle"></ion-icon>
+                                </ion-button>
+                            </div>
+                        </ion-note>
+                    </ion-item>
+                </ion-list>
+                <ion-button
+                    class="finish"
+                    expand="block"
+                    (click)="closeModal('save')"
+                >
+                    Selesai
+                </ion-button>
+            </ion-content>
+        </ng-template>
+    </ion-modal>
+
+    <ion-modal [isOpen]="isPurchaseOpen">
+        <ng-template>
+            <ion-header>
+                <ion-toolbar>
+                    <ion-title>Pembayaran</ion-title>
+                    <ion-buttons slot="end">
+                        <ion-button (click)="closeModal('cancel')">
+                            <ion-icon name="close"></ion-icon>
+                        </ion-button>
+                    </ion-buttons>
+                </ion-toolbar>
+            </ion-header>
+            <ion-content class="ion-padding">
+              <h1 class="flex font-bold my-2">Total: Rp {{total| rupiah}}</h1>
+                <ion-input
+                    label="Pembayaran Diterima"
+                    label-placement="floating"
+                    fill="outline"
+                    pattern="^[$\-\s]*[\d\,]*?([\.]\d{0,10})?\s*$"
+                    placeholder="Pembayaran Diterima"
+                    [(ngModel)]="receive_payment"
+                    (ngModelChange)="countChange()"
+                    inputmode="numeric"
+                    separator
+                ></ion-input>
+                <h2 *ngIf="total_change > 0" class="my-2">Kembalian: Rp{{total_change | rupiah}}</h2>
+                <h2 *ngIf="receive_payment >= total" class="my-2">Lunas</h2>
+                <h2 *ngIf="receive_payment < total" class="my-2">Belum Lunas</h2>
+                <div class="flex flex-wrap gap-2 my-4 mx-auto">
+                  <div class="w-1/4" *ngFor="let item of processPecahan()">
+                    <button (click)="inputPurchase(item)" class="border-2 w-full p-2 bg-slate-500" [ngClass]="item >= total ? 'block':'hidden'">
+                      Rp{{item | rupiah}}
+                    </button>
+                  </div>
+                </div>
+                <ion-textarea
+                  label="Catatan"
+                  label-placement="floating"
+                  fill="outline"
+                  placeholder="Catatan"
+                  [(ngModel)]="note"
+                ></ion-textarea>
+                <ion-button
+                    class="finish"
+                    expand="block"
+                    (click)="finishPurchase()"
+                >
+                    Selesai
+                </ion-button>
+            </ion-content>
+        </ng-template>
+    </ion-modal>
+    <ion-toast
+    [isOpen]="toast.isOpen"
+    message="{{toast.message}}"
+    [duration]="2000"
+    (didDismiss)="setOpen(false)"
+></ion-toast>
+</ion-content>
+<!-- footer total + tombol pembayaran -->
+
+<ion-footer>
+    <ion-toolbar>
+        <div class="flex justify-between m-4">
+            <h1 class="flex font-bold self-end">Rp {{total| rupiah}}</h1>
+            <ion-button
+                class="flex self-end"
+                [disabled]="total < 1"
+                (click)="isPurchaseOpen = true"
+            >
+                Bayar
+            </ion-button>
+        </div>
+    </ion-toolbar>
+</ion-footer>

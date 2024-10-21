@@ -1,0 +1,161 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button color="primary"></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Stock</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <ion-header collapse="condense">
+        <ion-toolbar>
+            <ion-title size="large">Stock</ion-title>
+        </ion-toolbar>
+    </ion-header>
+
+    <ion-segment
+        [(ngModel)]="view"
+        class="sticky top-0 z-10 bg-white"
+    >
+        <ion-segment-button value="stock">
+          <ion-label>
+              Stock</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="cart">
+
+          <ion-label>
+              Daftar Belanja</ion-label>
+        </ion-segment-button>
+    </ion-segment>
+    <div [ngSwitch]="view">
+
+        <div
+            *ngSwitchCase="'stock'"
+            class="m-4"
+        >
+            <ion-list>
+                <ion-item *ngFor="let stock of in_stock">
+                    <ion-label (click)="openCartOptions(stock)">{{stock.item_name}}</ion-label>
+                    <ion-checkbox
+                        slot="end"
+                        [(ngModel)]="stock.is_checked"
+                    ></ion-checkbox>
+                </ion-item>
+            </ion-list>
+        </div>
+        <div
+            *ngSwitchCase="'cart'"
+            class="m-4"
+        >
+            <ion-list>
+                <ion-item *ngFor="let stock of out_stock">
+                    <ion-label (click)="openCartOptions(stock)">{{stock.item_name}}</ion-label>
+                    <ion-checkbox
+                        slot="end"
+                        [(ngModel)]="stock.is_checked"
+                    ></ion-checkbox>
+                </ion-item>
+            </ion-list>
+        </div>
+    </div>
+    <ion-fab
+        slot="fixed"
+        vertical="bottom"
+        horizontal="end"
+    >
+        <ion-fab-button (click)="isModalOpen=true">
+            <ion-icon name="add-circle"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+
+    <ion-modal [isOpen]="isModalOpen">
+        <ng-template>
+            <ion-header>
+                <ion-toolbar>
+                    <ion-title>Tambah Item</ion-title>
+                    <ion-buttons slot="end">
+                        <ion-button (click)="isModalOpen = false">
+                            <ion-icon name="close"></ion-icon>
+                        </ion-button>
+                    </ion-buttons>
+                </ion-toolbar>
+            </ion-header>
+            <ion-content class="ion-padding">
+
+                <ion-input
+                    class="my-4"
+                    label="Nama"
+                    label-placement="floating"
+                    fill="outline"
+                    placeholder="Nama"
+                    [(ngModel)]="newItem.item_name"
+                ></ion-input>
+
+                <ion-input
+                    class="my-4"
+                    label="Harga"
+                    label-placement="floating"
+                    fill="outline"
+                    placeholder="Harga"
+                    type="text"
+                    [(ngModel)]="newItem.price"
+                    inputmode="numeric"
+                    separator
+                ></ion-input>
+                <ion-input
+                    class="my-4"
+                    label="Jumlah"
+                    label-placement="floating"
+                    fill="outline"
+                    placeholder="Jumlah"
+                    type="number"
+                    [(ngModel)]="newItem.qty"
+                ></ion-input>
+
+                <ion-input
+                    class="my-4"
+                    label="Unit"
+                    label-placement="floating"
+                    fill="outline"
+                    placeholder="pcs, kg, liter ..."
+                    [(ngModel)]="newItem.unit"
+                ></ion-input>
+
+                <ion-item>
+                    <ion-checkbox
+                        labelPlacement="start"
+                        [(ngModel)]="newItem.is_cart"
+                    >
+                        Daftar belanja
+                    </ion-checkbox>
+                </ion-item>
+                <ion-item>
+                    <ion-checkbox
+                        labelPlacement="start"
+                        [(ngModel)]="newItem.is_product"
+                    >
+                        Tautkan dengan item
+                    </ion-checkbox>
+                </ion-item>
+
+                <ion-button
+                    expand="full"
+                    class="my-4"
+                    (click)="addStockItem()"
+                    [disabled]="newItem.item_name == '' || newItem.price < 0 || newItem.qty < 0"
+                >
+                    Tambahkan
+                </ion-button>
+
+            </ion-content>
+        </ng-template>
+    </ion-modal>
+
+    <ion-toast
+    [isOpen]="toast.isOpen"
+    message="{{toast.message}}"
+    [duration]="3000"
+    (didDismiss)="setOpen(false)"
+></ion-toast>
+</ion-content>

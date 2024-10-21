@@ -1,0 +1,45 @@
+// For information on how to create your own theme, please see:
+// http://ionicframework.com/docs/theming/
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+:root {
+  --ion-color-dark: #3B4252;
+  --ion-color-dark-rgb: 59, 66, 82;
+  --ion-color-dark-contrast: #ECEFF4;
+  --ion-color-dark-contrast-rgb: 236, 239, 244;
+  --ion-color-dark-shade: #2E3440;
+  --ion-color-dark-tint: #4C566A;
+
+  --ion-color-light: #ECEFF4;
+	--ion-color-light-rgb: 236,239,244;
+	--ion-color-light-contrast: #000000;
+	--ion-color-light-contrast-rgb: 0,0,0;
+	--ion-color-light-shade: #d0d2d7;
+	--ion-color-light-tint: #eef1f5;
+
+  --ion-color-primary: #5E81AC;
+	--ion-color-primary-rgb: 94,129,172;
+	--ion-color-primary-contrast: #000000;
+	--ion-color-primary-contrast-rgb: 0,0,0;
+	--ion-color-primary-shade: #537297;
+	--ion-color-primary-tint: #6e8eb4;
+
+  --ion-color-danger: #BF616A;
+	--ion-color-danger-rgb: 191,97,106;
+	--ion-color-danger-contrast: #000000;
+	--ion-color-danger-contrast-rgb: 0,0,0;
+	--ion-color-danger-shade: #a8555d;
+	--ion-color-danger-tint: #c57179;
+}
+
+@font-face {
+  font-family: Quicksand;
+  src: url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap'); //change url accordingly
+  }
+
+  :root {
+     --ion-font-family: Quicksand;
+    }

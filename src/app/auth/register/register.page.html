@@ -1,0 +1,255 @@
+<ion-content [fullscreen]="true">
+    <div class="flex justify-center items-center w-full h-screen bg-[url('/assets/auth-bg.png')]">
+        <div class="relative w-full max-w-lg">
+            <div class="absolute -top-8 -left-8 w-80 h-3/4 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+            <div class="absolute -bottom-20 -right-8 w-80 h-3/4 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+            <div class="absolute -bottom-20 -left-8 w-80 h-3/4 bg-red-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+            <div class="absolute -top-8 -right-8 w-80 h-3/4 bg-teal-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+
+            <div class="flex w-full flex-col p-8 my-10 gap-y-4 mt-20 self-center bg-slate-100/90 rounded-lg">
+                <h2 class="text-center text-3xl">Register</h2>
+
+                <ion-input
+                    type="text"
+                    label="Nama Anda"
+                    label-placement="floating"
+                    fill="outline"
+                    [(ngModel)]="name"
+                    class="bg-white"
+                ></ion-input>
+                <ion-input
+                    type="text"
+                    label="Nama Usaha"
+                    label-placement="floating"
+                    fill="outline"
+                    [(ngModel)]="busines_name"
+                    class="bg-white"
+                ></ion-input>
+                <ion-input
+                    type="email"
+                    label="Email"
+                    label-placement="floating"
+                    fill="outline"
+                    [(ngModel)]="email"
+                    class="bg-white"
+                ></ion-input>
+                <ion-input
+                    type="password"
+                    label="password"
+                    label-placement="floating"
+                    fill="outline"
+                    [(ngModel)]="password"
+                    class="bg-white"
+                ></ion-input>
+
+                <ion-button
+                    type="submit"
+                    expand="block"
+                    (click)="isOpen = true"
+                    shape="round"
+                    fill="outline"
+                    [disabled]="name == '' || busines_name == '' || email == '' || password == ''"
+                >
+                    Lanjut
+                </ion-button>
+                <div class="text-center z-20">
+                    <p>
+                        Sudah punya akun?
+                        <a
+                            routerLink="/login"
+                            class="font-bold underline underline-offset-2 text-blue-600"
+                        >
+                            Masuk
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ion-toast
+        [isOpen]="toast.isOpen"
+        message="{{toast.message}}"
+        [duration]="2000"
+        (didDismiss)="setOpen(false)"
+    ></ion-toast>
+    <ion-modal [isOpen]="isOpen">
+        <ng-template>
+            <ion-header>
+                <ion-toolbar>
+                    <ion-title>Syarat Dan Ketentuan</ion-title>
+                    <ion-buttons slot="end">
+                        <ion-button (click)="isOpen = false">
+                            <ion-icon name="close"></ion-icon>
+                        </ion-button>
+                    </ion-buttons>
+                </ion-toolbar>
+            </ion-header>
+            <ion-content class="ion-padding">
+                    <div>
+                        <h2>
+                            <strong>FAQ (Pertanyaan yang Sering Diajukan)</strong>
+                        </h2>
+                        <h3>
+                            <strong>Umum</strong>
+                        </h3>
+                        <ul class="list-disc mx-8">
+                            <li>
+                                <strong>Apa itu aplikasi point of sales ini?</strong>
+                                Aplikasi ini dirancang untuk memudahkan Anda dalam mengelola
+            transaksi penjualan di toko Anda. Mulai dari pencatatan penjualan,
+            pengelolaan inventaris, hingga pembuatan laporan penjualan.
+                            </li>
+                            <li>
+                                <strong>
+                                    Siapa saja yang bisa menggunakan aplikasi ini?
+                                </strong>
+                                Aplikasi ini cocok digunakan oleh berbagai jenis usaha, seperti toko
+            retail, restoran, kafe, dan bisnis kecil lainnya.
+                            </li>
+                            <li>
+                                <strong>Bagaimana cara mendaftar?</strong>
+                                Anda bisa mendaftar langsung melalui aplikasi atau website kami.
+            Ikuti petunjuk pendaftaran yang tersedia.
+                            </li>
+                        </ul>
+                        <h3>
+                            <strong>Fitur</strong>
+                        </h3>
+                        <ul class="list-disc mx-8">
+                            <li>
+                                <strong>
+                                    Apa saja fitur yang tersedia dalam aplikasi ini?
+                                </strong>
+                                Aplikasi ini dilengkapi dengan berbagai fitur, seperti:
+                                <ul class="list-disc mx-8">
+                                    <li>Pencatatan penjualan</li>
+                                    <li>Pengelolaan produk dan jasa </li>
+                                    <li>Laporan penjualan</li>
+
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Bagaimana cara menambahkan produk baru?</strong>
+                                Anda bisa menambahkan produk baru secara manual.
+                            </li>
+                            <li>
+                                <strong>
+                                    Bagaimana cara melihat laporan penjualan?
+                                </strong>
+                                Anda bisa melihat laporan penjualan berdasarkan periode waktu
+            tertentu, kategori  produk
+                            </li>
+                        </ul>
+
+                        <h3>
+                            <strong>Data</strong>
+                        </h3>
+                        <ul class="list-disc mx-8">
+                            <li>
+                                <strong>Data saya akan amankah?</strong>
+                                Kami sangat menjaga kerahasiaan data Anda. Semua data yang Anda
+            masukkan akan dienkripsi dan disimpan dengan aman di server kami.
+                            </li>
+                            <li>
+                                <strong>
+                                    Apa yang terjadi jika saya ingin menghapus akun saya?
+                                </strong>
+                                Anda dapat menghapus akun Anda kapan saja. Setelah akun dihapus,
+            semua data Anda akan dihapus secara permanen.
+                            </li>
+                        </ul>
+                        <h2>
+                            <strong>Syarat dan Ketentuan</strong>
+                        </h2>
+                        <h3>
+                            <strong>Penggunaan Aplikasi</strong>
+                        </h3>
+                        <ul class="list-disc mx-8">
+                            <li>
+                                <strong>Lisensi:</strong>
+                                Dengan menggunakan aplikasi ini, Anda setuju dengan semua syarat dan
+            ketentuan yang berlaku.
+                            </li>
+                            <li>
+                                <strong>Tujuan Penggunaan:</strong>
+                                Aplikasi ini hanya boleh digunakan untuk tujuan komersial yang sah.
+                            </li>
+                            <li>
+                                <strong>Akun:</strong>
+                                Anda bertanggung jawab atas keamanan akun Anda.
+                            </li>
+                        </ul>
+                        <h3>
+                            <strong>Data</strong>
+                        </h3>
+                        <ul class="list-disc mx-8">
+                            <li>
+                                <strong>Pengumpulan Data:</strong>
+                                Kami akan mengumpulkan data pribadi Anda yang diperlukan untuk
+            memberikan layanan aplikasi ini.
+                            </li>
+                            <li>
+                                <strong>Penggunaan Data:</strong>
+                                Data Anda akan digunakan untuk personalisasi layanan, analisis data,
+            dan pengembangan produk.
+                            </li>
+                            <li>
+                                <strong>Kerahasiaan Data:</strong>
+                                Kami akan menjaga kerahasiaan data Anda sesuai dengan kebijakan
+            privasi kami.
+                            </li>
+                        </ul>
+                        <h3>
+                            <strong>Tanggung Jawab</strong>
+                        </h3>
+                        <ul class="list-disc mx-8">
+                            <li>
+                                <strong>Tanggung Jawab Pengguna:</strong>
+                                Anda bertanggung jawab atas semua aktivitas yang dilakukan
+            menggunakan akun Anda.
+                            </li>
+                            <li>
+                                <strong>Penafian:</strong>
+                                Kami tidak bertanggung jawab atas kerugian langsung maupun tidak
+            langsung yang timbul akibat penggunaan aplikasi ini.
+                            </li>
+                        </ul>
+                        <h3>
+                            <strong>Pembayaran</strong>
+                        </h3>
+                        <ul class="list-disc mx-8">
+                            <li>
+                                <strong>Pembayaran:</strong>
+                                Anda wajib membayar biaya langganan sesuai dengan ketentuan yang
+            berlaku.
+                            </li>
+                            <li>
+                                <strong>Pembayaran Ulang:</strong>
+                                Pembayaran akan dilakukan secara otomatis setiap periode billing.
+                            </li>
+                        </ul>
+                        <h3>
+                            <strong>Perubahan Syarat dan Ketentuan</strong>
+                        </h3>
+                        <ul class="list-disc mx-8">
+                            <li>
+                                <strong>Perubahan:</strong>
+                                Kami berhak mengubah syarat dan ketentuan ini kapan saja. Perubahan
+            akan berlaku efektif setelah diumumkan.
+                            </li>
+                        </ul>
+
+                    </div>
+                <ion-button
+                    class="finish"
+                    expand="block"
+                    (click)="onRegisterUser()"
+                    shape="round"
+                    fill="outline"
+                >
+                    Setujui dan daftar
+                </ion-button>
+            </ion-content>
+        </ng-template>
+    </ion-modal>
+</ion-content>

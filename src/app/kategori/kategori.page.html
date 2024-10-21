@@ -1,0 +1,66 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button color="primary"></ion-menu-button>
+        </ion-buttons>
+        <ion-title>kategori</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+    <div class="mt-6 overflow-visible px-4">
+        <ion-input
+            label="Kategori"
+            label-placement="floating"
+            fill="outline"
+            placeholder="Kategori"
+            [(ngModel)]="newKategori"
+        ></ion-input>
+
+        <ion-button
+            expand="full"
+            class="my-4"
+            (click)="id_cat != '' ? updateKategori() : addKategori()"
+            [disabled]="newKategori == ''"
+        >
+            Tambahkan
+        </ion-button>
+
+    </div>
+    <div
+        class="flex flex-col justify-center items-center h-screen"
+        *ngIf="kategori?.length < 1"
+    >
+        <strong class="mx-auto">Kategori masih kosong</strong>
+        <p class="text-center">Tambahkan kategori pada form diatas</p>
+    </div>
+    <ion-list *ngIf="kategori?.length >= 1">
+        <ion-item *ngFor="let kat of kategori">
+            <div class="flex justify-between w-full">
+                <strong class="capitalize">{{kat.category_name}}</strong>
+                <div class="flex flex-row">
+                    <ion-button
+                        expand="full"
+                        (click)="deleteKategori(kat.category_id)"
+                    >
+                        hapus
+                    </ion-button>
+                    <ion-button
+                        expand="full"
+                        (click)="setEdit(kat)"
+                    >
+                        edit
+                    </ion-button>
+                </div>
+            </div>
+
+        </ion-item>
+    </ion-list>
+    <ion-toast
+        [isOpen]="toast.isOpen"
+        message="{{toast.message}}"
+        [duration]="5000"
+        (didDismiss)="setOpen(false)"
+    ></ion-toast>
+</ion-content>

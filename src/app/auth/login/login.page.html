@@ -1,0 +1,58 @@
+<ion-content class="font-quicksand ">
+    <div class="flex justify-center items-center w-full h-screen bg-[url('/assets/auth-bg.png')]">
+        <div class="relative w-full max-w-lg">
+            <div class="absolute -top-8 -left-8 w-80 h-3/4 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+            <div class="absolute -bottom-20 -right-8 w-80 h-3/4 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+            <div class="absolute -bottom-20 -left-8 w-80 h-3/4 bg-red-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+            <div class="absolute -top-8 -right-8 w-80 h-3/4 bg-teal-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+
+            <div class="flex w-full flex-col p-8 my-10 gap-y-4 mt-20  self-center bg-slate-100/90 rounded-lg  ">
+                <h2 class="text-center text-3xl">Login</h2>
+                <ion-input
+                    type="email"
+                    label="Email"
+                    label-placement="floating"
+                    fill="outline"
+                    [(ngModel)]="email"
+                    class="bg-white"
+                ></ion-input>
+                <ion-input
+                    type="password"
+                    label="password"
+                    label-placement="floating"
+                    fill="outline"
+                    [(ngModel)]="password"
+                    class="bg-white"
+                ></ion-input>
+
+                <ion-button
+                    type="submit"
+                    expand="block"
+                    (click)="onSignIn()"
+                    shape="round"
+                    fill="outline"
+                >
+                    Login
+                </ion-button>
+                <div class="text-center z-20">
+                    <p>
+                        Belum punya akun?
+                        <a
+                            routerLink="/register"
+                            class="font-bold underline underline-offset-2 text-blue-600"
+                        >
+                            Daftar
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ion-toast
+        [isOpen]="toast.isOpen"
+        message="{{toast.message}}"
+        [duration]="2000"
+        (didDismiss)="setOpen(false)"
+    ></ion-toast>
+
+</ion-content>
