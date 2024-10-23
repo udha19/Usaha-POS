@@ -8,6 +8,7 @@ import { DashboardPageRoutingModule } from './dashboard-routing.module';
 
 import { DashboardPage } from './dashboard.page';
 import { ShortenPipe } from "../share/pipes/shorten.pipe";
+import { RupiahPipe } from '../share/pipes/rupiah.pipe';
 
 @NgModule({
   imports: [
@@ -15,7 +16,7 @@ import { ShortenPipe } from "../share/pipes/shorten.pipe";
     FormsModule,
     IonicModule,
     DashboardPageRoutingModule,
-    ShortenPipe
+    RupiahPipe,
 ],
   declarations: [DashboardPage]
 })

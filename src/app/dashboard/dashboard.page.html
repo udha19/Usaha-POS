@@ -1,114 +1,77 @@
-<ion-header [translucent]="true">
+<ion-header>
     <ion-toolbar>
         <ion-buttons slot="start">
-            <ion-menu-button color="primary"></ion-menu-button>
+            <ion-menu-button color="light"></ion-menu-button>
         </ion-buttons>
-        <ion-title class="capitalize">dashboard</ion-title>
+        <ion-title
+            class="capitalize"
+            color="light"
+        >
+            dashboard
+        </ion-title>
     </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-    <ion-header collapse="condense">
-        <ion-toolbar>
-            <ion-title size="large">dashboard</ion-title>
-        </ion-toolbar>
-    </ion-header>
-    <div class="flex flex-wrap my-8">
-        <div class="w-1/2">
-            <ion-card>
-                <ion-card-content class="text-center">
-                    <span class=" font-bold text-3xl">0</span>
-                </ion-card-content>
-                <ion-card-header>
-                    <ion-card-title>
-                        <p class="text-center">Transaksi</p>
-                    </ion-card-title>
-                </ion-card-header>
-            </ion-card>
-        </div>
-        <div class="w-1/2">
-            <ion-card>
-                <ion-card-content class="text-center">
-                    <span class=" font-bold text-3xl">Rp {{total_trx | shorten}}</span>
-                </ion-card-content>
-                <ion-card-header>
-                    <ion-card-title>
-                        <p class="text-center">Total Transaksi</p>
-                    </ion-card-title>
-                </ion-card-header>
-            </ion-card>
+<ion-content [fullscreen]="true" class="h-screen">
 
-        </div>
-    </div>
-    <div>
-        <ion-card>
-            <ion-card-header>
-                <div class="mx-auto">
-                  <ion-toggle [checked]="false"><p class="text-xl font-bold">Buka Usaha</p></ion-toggle>
+    <div class="absolute top-0 w-full h-64 bg-[url('/assets/pattern2.png')] bg-cover"></div>
+    <div class="flex flex-wrap ">
+        <div class="w-full">
+            <ion-card class="bg-violet-400/40 backdrop-blur-sm">
+                <ion-card-header>
+                    <ion-card-title class="flex flex-row justify-end">
+                        <div class="text-white flex flex-row gap-x-4 items-end">
+                            <p class="font-normal text-2xl self-end">
+                                {{date.day}}/{{date.month}}/{{date.year}}
+                            </p>
+                            <p class="font-bold my-1">
+                                [ {{clock.hour < 10 ? '0'+clock.hour : clock.hour }}
+                                <span class="animate-ping">:</span>
+                                {{clock.minute < 10 ? '0'+clock.minute : clock.minute}} ]
+                            </p>
+                        </div>
+                    </ion-card-title>
+                </ion-card-header>
+                <div class="flex flex-col mx-4">
+                    <p class="text-white text-2xl text-center font-bold">Transaksi hari ini</p>
+                    <hr class="my-2">
+                    <p class="text-white text-2xl font-bold">Total Transaksi: {{trx}}</p>
+                    <p class="text-white text-2xl font-bold">Omset: Rp{{omset|rupiah}}</p>
                 </div>
-            </ion-card-header>
-        </ion-card>
+                <div class="p-4 w-full ">
+                    <hr class="my-2">
+                    <div class="w-3/4 mx-auto">
+                        <ion-toggle
+                            [checked]="false"
+                            class=" w-full"
+                        >
+                            <p class="text-white text-2xl font-bold">Buka Usaha</p>
+                        </ion-toggle>
+                    </div>
+                </div>
+            </ion-card>
+        </div>
+
     </div>
     <div class="flex flex-wrap mt-4">
-        <div class="w-1/2">
-            <ion-card>
-                <ion-card-content class="text-center">
-                    <span class=" font-bold text-3xl">0</span>
-                </ion-card-content>
-                <ion-card-header>
-                    <ion-card-title>
-                        <p class="text-center">Item</p>
-                    </ion-card-title>
-                </ion-card-header>
+        <div class="w-1/2 md:w-1/4 lg:1/4" *ngFor="let menu of menus; let i = index ">
+            <ion-card
+
+                class="text-center pt-6 pb-4"
+                [routerLink]="[menu.url]"
+            >
+                <ion-icon
+                    [name]="menu.icon"
+                    [class]="color[i]"
+                ></ion-icon>
+                <p class="text-center text-xl font-bold ">{{menu.title}}</p>
             </ion-card>
         </div>
-        <div class="w-1/2">
-            <ion-card>
-                <ion-card-content class="text-center">
-                    <span class=" font-bold text-3xl">0</span>
-                </ion-card-content>
-                <ion-card-header>
-                    <ion-card-title>
-                        <p class="text-center">Order Proses</p>
-                    </ion-card-title>
-                </ion-card-header>
-            </ion-card>
-        </div>
-        <div class="w-1/2">
-            <ion-card>
-                <ion-card-content class="text-center">
-                    <span class=" font-bold text-3xl">0</span>
-                </ion-card-content>
-                <ion-card-header>
-                    <ion-card-title>
-                        <p class="text-center">Kunjungan</p>
-                    </ion-card-title>
-                </ion-card-header>
-            </ion-card>
-        </div>
-        <div class="w-1/2">
-            <ion-card>
-                <ion-card-content class="text-center">
-                    <span class=" font-bold text-3xl">0</span>
-                </ion-card-content>
-                <ion-card-header>
-                    <ion-card-title>
-                        <p class="text-center">Total Transaksi</p>
-                    </ion-card-title>
-                </ion-card-header>
-            </ion-card>
-        </div>
-        <div class="w-1/2">
-            <ion-card>
-                <ion-card-content class="text-center">
-                    <span class=" font-bold text-3xl">0</span>
-                </ion-card-content>
-                <ion-card-header>
-                    <ion-card-title>
-                        <p class="text-center">Total Transaksi</p>
-                    </ion-card-title>
-                </ion-card-header>
-            </ion-card>
-        </div>
+
     </div>
+
+<div class="mt-20 px-4 flex flex-row w-full bottom-0 bg-white">
+  <hr/>
+  <p class="text-center w-full text-slate-600">Craft with love Usaha Menuju Sejahtera 2024</p>
+</div>
 </ion-content>

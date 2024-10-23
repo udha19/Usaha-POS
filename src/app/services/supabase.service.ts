@@ -119,4 +119,16 @@ export class SupabaseService {
     .eq('busines_id', id)
     .eq('is_product', true)
   }
+
+
+  async getDailytrx(id: string, date: string) {
+    const { data: trx, error } = await this.supabase.from('transaction')
+      .select('*')
+      .eq('busines_id', id)
+      .gte('created_at', date+'T00:00:00+00')
+    if (error) {
+      console.log(error)
+    }
+    return trx
+  }
 }
