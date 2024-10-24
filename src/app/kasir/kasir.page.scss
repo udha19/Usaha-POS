@@ -22,3 +22,11 @@ ion-fab-button[data-desc]::after {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+.custom {
+  background: #fff;
+  position: fixed;
+  bottom: 70px;
+}
+:disabled {
+  background-color: slategray;
+}

@@ -17,12 +17,17 @@ export class KasirPage implements OnInit {
   isPurchaseOpen = false;
   isFullpaid = true;
   note = '';
-
+  customItem = {
+    item_name: '',
+    price: 0,
+    qty: 1
+  }
   toast = {
     isOpen: false,
     message: 'Pembayaran Berhasil',
   };
   receive_payment = 0;
+  prs_rcv_pym  = 0;
   total_change = 0;
   pecahan = [0, 5000, 10000, 20000, 50000, 100000];
   constructor(
@@ -52,7 +57,15 @@ export class KasirPage implements OnInit {
         break;
     }
   }
-
+  addCustomItem(){
+    this.customItem.price = parseFloat(this.customItem.price.toString().replace(/\./g, ''))
+    this.items.push(this.customItem)
+    this.customItem = {
+      item_name: '',
+      price: 0,
+      qty: 1
+    }
+  }
   addToCart(item: any) {
     // item = {...item, qty: 1}
     this.cart.push(item);
@@ -85,6 +98,7 @@ export class KasirPage implements OnInit {
     } else {
       this.cart = [];
       this.isSelectItemOpen = false;
+      this.isPurchaseOpen = false;
     }
   }
   inputPurchase(r: number) {
@@ -92,7 +106,8 @@ export class KasirPage implements OnInit {
     this.countChange();
   }
   countChange() {
-    this.total_change = this.receive_payment - this.total;
+    this.total_change = parseInt(this.receive_payment.toString().replace(/\./g, '')) - this.total;
+    this.prs_rcv_pym = parseInt(this.receive_payment.toString().replace(/\./g, ''))
   }
 
   setOpen(opt: boolean) {
@@ -140,7 +155,7 @@ export class KasirPage implements OnInit {
   }
 
   finishPurchase() {
-    if(this.receive_payment >= this.total){
+    if(parseInt(this.receive_payment.toString().replace(/\./g, '')) >= this.total){
       this.isFullpaid = true
     } else {
       this.isFullpaid = false
@@ -148,25 +163,26 @@ export class KasirPage implements OnInit {
     this.kasir.postTrx({
       busines_id: this.id,
       total_price: this.total,
-      total_paid: this.receive_payment,
+      total_paid: parseInt(this.receive_payment.toString().replace(/\./g, '')),
       is_full_paid: this.isFullpaid,
       note: this.note,
       summary: this.cart,
     });
     this.cart.forEach((item: any) => {
-      this.kasir.UpdateItemOrder({
-        item_id: item.item_id,
-        ordered: item.qty,
-      });
+      if(item.item_id){
+        this.kasir.UpdateItemOrder({
+          item_id: item.item_id,
+          ordered: item.qty,
+        });
+      }
     });
     this.isPurchaseOpen = false;
     this.cart = [];
     this.total = 0;
     this.toast.isOpen = true;
+    this.items = []
+    this.getItem();
   }
 
-  // TODO: store trx to db
-  // TODO: count item ordered
-  // TODO: create trx history
 
 }
