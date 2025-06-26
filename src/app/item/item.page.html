@@ -100,7 +100,21 @@
                     fill="outline"
                     placeholder="Nama"
                     [(ngModel)]="newItem.item_name"
-                ></ion-input>
+                >
+                    <ion-button
+                        fill="clear"
+                        slot="end"
+                        (click)="generate()"
+                    >
+                        <ion-icon
+                            slot="icon-only"
+                            name="sparkles"
+                            aria-hidden="true"
+                        ></ion-icon>
+                    </ion-button>
+                </ion-input>
+                
+                <div class="progress" *ngIf="generateLoader"></div>
 
                 <ion-input
                     class="my-4"

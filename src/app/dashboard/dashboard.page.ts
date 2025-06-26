@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SupabaseService } from '../services/supabase.service';
+import { Subscription, timer } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -48,11 +49,25 @@ export class DashboardPage implements OnInit {
     'mx-auto icon text-[#b48ead]',
   ];
 
+  subscription !: Subscription;
+
   constructor(private data: SupabaseService) {}
 
   ngOnInit() {
     this.getSelfData();
     this.getCountData();
+    this.subscription = timer(0, 60000).pipe().subscribe(() => {
+      this.time = new Date();
+      this.date = {
+        day: this.time.getDate(),
+        month: this.time.getMonth() + 1,
+        year: this.time.getFullYear(),
+      };
+      this.clock = {
+        hour: this.time.getHours(),
+        minute: this.time.getMinutes(),
+      };
+    })
   }
 
   async getSelfData() {

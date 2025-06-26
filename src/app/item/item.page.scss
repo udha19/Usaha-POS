@@ -2,3 +2,32 @@ image-cropper {
   --cropper-outline-color: rgba(0, 0, 0, 0.642);
   --cropper-overlay-color: var(--ion-background-color);
 }
+
+.progress {
+  height: 3px;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 3px;
+  background: linear-gradient(
+    90deg,
+    red 0%,
+    yellow 15%,
+    lime 30%,
+    cyan 50%,
+    blue 65%,
+    magenta 80%,
+    red 100%
+  );
+  background-size: 200%;
+  animation: moveGradient 5s linear infinite;
+}
+
+@keyframes moveGradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: -200% 0%;
+  }
+}
+

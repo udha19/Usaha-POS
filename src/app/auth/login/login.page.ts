@@ -25,7 +25,6 @@ export class LoginPage implements OnInit {
   onSignIn(){
     try {
       this.authService.signIn(this.email, this.password).then(res => {
-        console.log(res)
         localStorage.setItem('user_id', res.user.id)
         this.router.navigate(['/dashboard'])
       }).catch(e=> {

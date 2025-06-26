@@ -12,6 +12,7 @@ import {
 } from 'ngx-image-cropper';
 import { NgxImageCompressService } from 'ngx-image-compress';
 import { environment } from 'src/environments/environment';
+import { GeminiService } from '../services/gemini.service';
 
 @Component({
   selector: 'app-item',
@@ -118,11 +119,13 @@ export class ItemPage implements OnInit {
   ]
 
   sourcePicker = false;
+  generateLoader = false;
 
   constructor(
     private service: SupabaseService,
     private imageService: ImagesService,
-    private compressImage: NgxImageCompressService
+    private compressImage: NgxImageCompressService,
+    private gemini: GeminiService
   ) {}
 
   ngOnInit() {
@@ -144,6 +147,20 @@ export class ItemPage implements OnInit {
     } catch (error) {
     } finally {
     }
+  }
+
+  generate(){
+    this.generateLoader = true
+    this.gemini.generateItem(this.newItem.item_name).then((res) => {
+      
+      const r = JSON.parse(res);
+      const resp = r[0];
+      this.newItem.item_name = resp.name;
+      this.newItem.price = resp.price;
+      this.newItem.desc = resp.description;
+      this.generateLoader = false
+
+    });
   }
 
   addItem() {
